@@ -25,10 +25,6 @@ MarkupSafe==0.18
 migrate==0.3.8
 numpy==1.11.1rc1
 pbr==1.10.0
-pygobject==3.22.0
-python-apt==1.1.0b5
-python-openid==2.2.5
-python3-openid==3.0.10
 rauth==0.7.0
 requests==2.4.3
 six==1.10.0
