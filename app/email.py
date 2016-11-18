@@ -17,4 +17,17 @@ def send_email(to, subject, template, **kwargs):
     msg.html = render_template(template + '.html', **kwargs)
     thr = Thread(target=send_async_email, args=[app, msg])
     thr.start()
-    return thr
+    return thr 
+
+"""
+def send_email(to, subject, template, **kwargs):
+    app = current_app._get_current_object()
+    msg = Message(
+            subject,
+            recipients=[to],
+            html = render_template(template + '.html', **kwargs),
+            sender = app.config['FLASKY_MAIL_SENDER']
+    )
+    with app.app_context():
+        mail.send(msg)
+"""

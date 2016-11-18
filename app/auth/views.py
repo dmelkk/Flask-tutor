@@ -6,10 +6,9 @@ from ..email import send_email
 from .forms import LoginForm, RegistrationForm
 from .. import db
 
-
+"""
 @auth.before_app_request
 def before_request():
-    print(request.endpoint)
     if current_user.is_authenticated and request.endpoint is not None:
         if not current_user.confirmed \
                 and request.endpoint[:5] != 'auth.' \
@@ -17,6 +16,14 @@ def before_request():
             return redirect(url_for('auth.unconfirmed'))
     else:
         pass
+"""
+@auth.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.ping()
+        if not current_user.confirmed \
+                and request.endpoint[:5] != 'auth.':
+                    return redirect(url_for('auth.unconfirmed'))
 
 
 @auth.route('/unconfirmed')

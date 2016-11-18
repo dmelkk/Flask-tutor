@@ -9,11 +9,14 @@ class Config:
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 587
     MAIL_USE_TLS =True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    # MAIL_USERNAME = os.environ['MAIL_USERNAME']
+    # MAIL_PASSWORD = os.environ['MAIL_PASSWORD']
+    MAIL_USERNAME = 'dmelkktestdev@gmail.com'
+    MAIL_PASSWORD = 'dev-password'
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SENDER = 'Flasky Admin <dmelkktestdev@gmail.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
+    print(FLASKY_ADMIN)
 
     @staticmethod
     def init_app(app):
