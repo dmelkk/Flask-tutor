@@ -24,14 +24,14 @@ class Role(db.Model):
     users = db.relationship('User', backref='role', lazy='dynamic')
 
     @staticmethod
-    def inert_role():
+    def insert_role():
         roles = {
             'User': (Permission.FOLLOW |
                      Permission.COMMENT |
-                     Permission.WRITE_ARTICLE, True),
+                     Permission.WRITE_ARTICLES, True),
             'Moderator': (Permission.FOLLOW |
                           Permission.COMMENT |
-                          Permission.WRITE_ARTICLE |
+                          Permission.WRITE_ARTICLES |
                           Permission.MODERATE_COMMENTS, False),
             'Administrator': (0xff, False)
         }
@@ -46,7 +46,14 @@ class Role(db.Model):
                           
     def __repr__(self):
         return '<Role %r>' % self.name
-    
+
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
 
 class User(UserMixin, db.Model):
@@ -59,10 +66,11 @@ class User(UserMixin, db.Model):
     confirmed = db.Column(db.Boolean, default=True)
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
-    about_me = db.Column(db.Text())
-    member_since = db.Column(db.DateTime(), default=datetime.utcnow())
-    last_seen = db.Column(db.DateTime(), default=datetime.utcnow())
+    about_me = db.Column(db.Text)
+    member_since = db.Column(db.DateTime, default=datetime.utcnow())
+    last_seen = db.Column(db.DateTime, default=datetime.utcnow())
     avatar_hash = db.Column(db.String(32))
+    posts = db.relationship('Post', backref='author', lazy='dynamic')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -131,6 +139,7 @@ class AnonymousUser(AnonymousUserMixin):
 
     def is_administrator(self):
         return False
+
 
 
 @login_manager.user_loader
