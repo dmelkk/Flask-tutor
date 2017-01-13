@@ -2,7 +2,7 @@
 
 {% block page_content %}
 <div class="page-header">
-    <img class="img-rounded profile-thumnail" src="{{ user.gravatar(size=100) }}">
+    <img class="img-rounded profile-thumbnail" src="{{ user.gravatar(size=100) }}">
     <div class="profile-header">
         <h1>{{ user.username }}</h1>
         {% if user.name or user.location %}
@@ -34,5 +34,6 @@
         </a>
         {% endif %}
     </div>
+    <h3>Posts by {{ user.username }}</h3>
 </div>
 {% endblock page_content %}
